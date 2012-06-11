@@ -7,7 +7,7 @@
 \usetheme{Warsaw}
 
 \title[PDI1 Prezentacja]{Projekt i implementacja usługi internetowej do zarządzania zadaniami zgodnej z REST oraz współpracującej z nią aplikacji mobilnej}
-\author{JG}
+\author{Juliusz Gonera}
 \date{2012-06-09}
 
 \begin{document}
@@ -112,7 +112,7 @@
 \end{frame}
 
 \begin{frame}
-  \centerline{Koniec}
+  \centerline{Koniec.}
 \end{frame}
 
 
