@@ -37,22 +37,6 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Podział odpowiedzialności}
-  \begin{itemize}
-    \item serwer zawiera logikę aplikacji
-    \item klient jest odpowiedzialny za prezentację danych. 
-    \item klient i serwer są rozwijane niezależnie od siebie.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Bezstanowość}
-  \begin{itemize}
-    \item aplikacja nie przechowuje stanu po stronie serwera
-    \item dane potrzebne do zrealizowania zapytania wysyłane za każdym razem
-    \item umożliwia skalowanie horyzontalne systemu
-  \end{itemize}
-\end{frame}
-
 \begin{frame}{Warstwowy system aplikacji}
    \includegraphics[width=0.8\linewidth]{img/warstwowy.png}
 \end{frame}
@@ -114,6 +98,23 @@
 \begin{frame}
   \centerline{Koniec.}
 \end{frame}
+
+\begin{frame}{Podział odpowiedzialności}
+  \begin{itemize}
+    \item serwer zawiera logikę aplikacji
+    \item klient jest odpowiedzialny za prezentację danych. 
+    \item klient i serwer są rozwijane niezależnie od siebie.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Bezstanowość}
+  \begin{itemize}
+    \item aplikacja nie przechowuje stanu po stronie serwera
+    \item dane potrzebne do zrealizowania zapytania wysyłane za każdym razem
+    \item umożliwia skalowanie horyzontalne systemu
+  \end{itemize}
+\end{frame}
+
 
 
 \begin{frame}[fragile]{Hypermedia as the Engine of Application State}
