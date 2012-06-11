@@ -1,0 +1,212 @@
+\documentclass{beamer}
+
+\usepackage{textcomp}
+\usepackage{polski}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usetheme{Warsaw}
+
+\title[PDI1 Prezentacja]{Projekt i implementacja usługi internetowej do zarządzania zadaniami zgodnej z REST oraz współpracującej z nią aplikacji mobilnej}
+\author{JG}
+\date{2012-06-09}
+
+\begin{document}
+
+\begin{frame}{Intro}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Założenia projektowe}
+  \begin{itemize}
+    \item REST
+    \item Collection+JSON API
+    \item Clojure
+    \item Podejście funkcyjne
+    \item Natywny klient mobilny (android)
+    \item Postgresql
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{REST - wymagania}
+  \begin{itemize}
+    \item podział odpowiedzialności wg modelu klient-serwer
+    \item bezstanowość
+    \item pamięć podręczna
+    \item system warstwowy
+    \item standardowy interfejs
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Podział odpowiedzialności}
+  \begin{itemize}
+    \item serwer zawiera logikę aplikacji
+    \item klient jest odpowiedzialny za prezentację danych. 
+    \item klient i serwer są rozwijane niezależnie od siebie.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Bezstanowość}
+  \begin{itemize}
+    \item aplikacja nie przechowuje stanu po stronie serwera
+    \item dane potrzebne do zrealizowania zapytania wysyłane za każdym razem
+    \item umożliwia skalowanie horyzontalne systemu
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Warstwowy system aplikacji}
+   \includegraphics[width=0.8\linewidth]{img/warstwowy.png}
+\end{frame}
+
+\begin{frame}{Standardowy interfejs}
+  \begin{itemize}
+    \item API definiuje zbiór nazw zasobów i operacje
+    \item czasowniki HTTP wykorzystywane jako działania na zasobach
+    \item przejścia stanu aplikacji klienckiej są dokonywane na podstawie opcji oferowanych w odpowiedzi serwera
+    \item klient zna tylko główny URI usługi i zbiór zasobów udostępnianych
+    \item odkrywalność, samodokumentowalność API
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Workflow klienta}
+   \includegraphics[scale=0.5]{img/state-machine.png}
+\end{frame}
+
+\begin{frame}{Zalety REST}
+  \begin{itemize}
+    \item skalowalność
+    \item zmniejszenie zależności między modułami
+    \item odkrywalność, samodokumentowalność API
+    \item łatwe budowanie klientów
+    \item prostota
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Wady}
+  \begin{itemize}
+    \item redundancja przesyłanych danych
+    \item model wyklucza przechowywanie stanu sesji po stronie serwera
+    \item nie istnieje formalny standard opisu usług zgodnych z REST
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Clojure i podejście funkcyjne}
+  \begin{itemize}
+    \item dialekt LISP
+    \item homoikoniczność, makra
+    \item łatwe testowanie kodu
+    \item bezpieczeństwo wątków
+    \item filozofia - unikanie stanu, programowanie funkcyjne. 
+    \item zmiana stanu - sytuacja wyjątkowa
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Wybrane funkcjonalności aplikacji}
+  \begin{itemize}
+    \item ustalanie priorytetu zadanie
+    \item działanie offline
+    \item sortowanie wg priorytetu
+    \item wiele list zadań
+    \item synchronizacja list między urządzeniami
+    \item agenda
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \centerline{Koniec}
+\end{frame}
+
+
+\begin{frame}[fragile]{Hypermedia as the Engine of Application State}
+  \begin{verbatim}
+Collection+JSON
+
+{"collection":
+  {
+    "version": "1.0"
+    "href": URI,
+    "links": [...],
+    "items": [...],
+    "queries": [...],
+    "template": {OBIEKT},
+    "error": {OBIEKT}
+  }
+ }
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Konstrukcja zapytań}
+\begin{verbatim}
+ { "queries" : [
+    {"href" : URI,
+       "rel" : "all",
+       "prompt" : "Wszystkie zadania"},
+    {"href": URI,
+      "rel": "date-due",
+      "prompt": "Zadania z podanym terminem zakończenia",
+      "data": [{"name": "termin", "value": "", "prompt": "Termin zakończenia"}]
+    }, ]}
+
+Zapytanie:
+GET URI HTTP/1.1
+Host: URI
+Content-Type: application/vnd.collection+json
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Konstrukcja form}
+\begin{verbatim}
+{ "template":
+  { "data": [
+    {"name": "full-name", "value": "", "prompt": "Wpisz swoje imię"},
+    {"name": "email", "value": "", "prompt": "Wprowadź adres e-mail"}
+  ]}
+ }
+
+Zapytanie:
+POST /users/ HTTP/1.1
+Host: URI
+Content-Type: application/vnd.collection+json
+{ "template" : { "data" : [ ...] } }
+
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Kolekcja elementów - items}
+\begin{verbatim}
+    items" :
+    [
+      {
+        "href" : URI,
+        "data" : [
+{"prompt" : STRING, "name" : STRING, "value" : VALUE},
+        ],
+        "links" : [ARRAY]
+      },
+      ...
+      {
+        "href" : URI,
+        "data" : [ARRAY],
+        "links" : [ARRAY]
+      }
+\end{verbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]{Clojure - narzędzia abstrakcji}
+\begin{verbatim}
+(defmacro validate-presence-of
+  [& attributes]
+  (let [model (symbol (last (clojure.string/split (str (ns-name *ns*)) #"\.")))]
+    `(if (not (and ~@(map #(list `contains? `~model %) attributes)))
+        (throw (Exception. (str "Model " '~model
+                                " validates presence of attributes: " '~attributes))))))
+
+;; constructor
+(defn new [{:keys [title body] :as task}]
+  (validate-presence-of :title :body)
+  task)
+\end{verbatim}
+\end{frame}
+
+
+\end{document}
