@@ -33,7 +33,7 @@
     \item bezstanowość
     \item pamięć podręczna
     \item system warstwowy
-    \item standardowy interfejs
+    \item ustandaryzowany interfejs
   \end{itemize}
 \end{frame}
 
@@ -57,7 +57,7 @@
    \includegraphics[width=0.8\linewidth]{img/warstwowy.png}
 \end{frame}
 
-\begin{frame}{Standardowy interfejs}
+\begin{frame}{Ustandaryzowany interfejs}
   \begin{itemize}
     \item API definiuje zbiór nazw zasobów i operacje
     \item czasowniki HTTP wykorzystywane jako działania na zasobach
