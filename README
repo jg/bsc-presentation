@@ -1,0 +1,5 @@
+Some Notes
+----------
+
+- The server can change the location for an specific resource, so all the clients having a hardcoded URL for that resource will break.
+- It pushes some knowledge about the application state workflow to the client side. What happens if an action in a resource is only available for a given state, shall we put that logic in any possible API consumer ?. Definitely not, the server should always mandate what can be done or not with a resource. For example, if the state of a purchase order is canceled, the client application application shouldn’t be allowed to submit that PO. If we have an user in front of an UI using that API, he shouldn’t see the submit button enabled (That logic for enabling or disabling the button could be driven by the server using links).

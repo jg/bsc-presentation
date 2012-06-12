@@ -46,6 +46,7 @@
   \end{itemize}
 \end{frame}
 
+
 \begin{frame}{Workflow klienta}
    \includegraphics[scale=0.5]{img/state-machine.png}
 \end{frame}
@@ -94,6 +95,14 @@
   \centerline{Koniec.}
 \end{frame}
 
+\begin{frame}{Ustandaryzowany interfejs}
+  \begin{quote}
+    A REST API must not define fixed resource names or hierarchies (an obvious coupling of client and server). Servers must have the freedom to control their own namespace (…) Failure here implies that clients are assuming a resource structure due to out-of-band information (…) A REST API should be entered with no prior knowledge beyond the initial URI. 
+    - Roy Thomas Fielding 
+  \end{quote}
+\end{frame}
+
+
 \begin{frame}{Warstwowy system aplikacji}
    \includegraphics[width=0.8\linewidth]{img/warstwowy.png}
 \end{frame}
@@ -114,7 +123,6 @@
     \item umożliwia skalowanie horyzontalne systemu
   \end{itemize}
 \end{frame}
-
 
 
 \begin{frame}[fragile]{Hypermedia as the Engine of Application State}
@@ -209,5 +217,23 @@ Content-Type: application/vnd.collection+json
 \end{verbatim}
 \end{frame}
 
+
+\begin{frame}[fragile]{HATEOAS}
+\begin{verbatim}
+#http://graph.facebook.com/search?type=Page&q=dcuocentral
+{
+  "data": [
+    {
+      "name": "DCUO Central",
+      "category": "Website",
+      "id": "141968085865824"
+    }
+  ],
+  "paging": {
+    "next": "http://graph.facebook.com/search?type=Page&q=dcuocentral&limit=25&offset=25"
+  }
+}
+\end{verbatim}
+\end{frame}
 
 \end{document}

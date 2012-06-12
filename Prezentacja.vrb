@@ -1,13 +1,15 @@
-\frametitle {Clojure - narzędzia abstrakcji}\begin {verbatim}
-(defmacro validate-presence-of
-  [& attributes]
-  (let [model (symbol (last (clojure.string/split (str (ns-name *ns*)) #"\.")))]
-    `(if (not (and ~@(map #(list `contains? `~model %) attributes)))
-        (throw (Exception. (str "Model " '~model
-                                " validates presence of attributes: " '~attributes))))))
-
-;; constructor
-(defn new [{:keys [title body] :as task}]
-  (validate-presence-of :title :body)
-  task)
+\frametitle {HATEOAS}\begin {verbatim}
+#http://graph.facebook.com/search?type=Page&q=dcuocentral
+{
+  "data": [
+    {
+      "name": "DCUO Central",
+      "category": "Website",
+      "id": "141968085865824"
+    }
+  ],
+  "paging": {
+    "next": "http://graph.facebook.com/search?type=Page&q=dcuocentral&limit=25&offset=25"
+  }
+}
 \end{verbatim}
