@@ -37,10 +37,6 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Warstwowy system aplikacji}
-   \includegraphics[width=0.8\linewidth]{img/warstwowy.png}
-\end{frame}
-
 \begin{frame}{Ustandaryzowany interfejs}
   \begin{itemize}
     \item API definiuje zbiór nazw zasobów i operacje
@@ -98,6 +94,11 @@
 \begin{frame}
   \centerline{Koniec.}
 \end{frame}
+
+\begin{frame}{Warstwowy system aplikacji}
+   \includegraphics[width=0.8\linewidth]{img/warstwowy.png}
+\end{frame}
+
 
 \begin{frame}{Podział odpowiedzialności}
   \begin{itemize}
